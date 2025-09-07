@@ -44,34 +44,13 @@ export async function POST(request: NextRequest) {
         budget.remainingAmount -= amount;
         await budget.save();
         
-        // Send real-time budget update via Socket.IO
-        if (global.io) {
-          global.io.to(`user:${decoded.userId}`).emit('budget_updated', {
-            budget: {
-              _id: budget._id,
-              totalAmount: budget.totalAmount,
-              remainingAmount: budget.remainingAmount
-            }
-          });
-        }
+        // Real-time budget updates would be handled by WebSocket service in production
+        console.log('Budget updated for user:', decoded.userId);
       }
     }
 
-    // Send real-time expense notification via Socket.IO
-    if (global.io) {
-      global.io.to(`user:${decoded.userId}`).emit('expense_added', {
-        expense: {
-          _id: expense._id,
-          amount: expense.amount,
-          reason: expense.reason,
-          category: expense.category,
-          trackingMode: expense.trackingMode,
-          date: expense.date
-        }
-      });
-    } else {
-      console.log('Socket.IO not available');
-    }
+    // Real-time updates would be handled by WebSocket service in production
+    console.log('Expense added for user:', decoded.userId);
 
     return NextResponse.json({ message: 'Expense added successfully', expense });
   } catch (error) {

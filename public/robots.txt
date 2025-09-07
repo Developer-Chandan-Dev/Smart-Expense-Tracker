@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /auth
+Allow: /dashboard
+Disallow: /api/
+Disallow: /admin
+
+Sitemap: https://smart-expense-tracker2.vercel.app/sitemap.xml

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Head from 'next/head';
 import { ArrowRight, BarChart3, Shield, Smartphone, Target, TrendingUp, Users, Zap, CheckCircle, Star } from 'lucide-react';
 
 export default function Home() {
@@ -25,8 +26,37 @@ export default function Home() {
     }
   };
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Smart Expense Tracker",
+    "description": "Intelligent financial management platform for tracking expenses and managing budgets with real-time analytics",
+    "url": "https://smart-expense-tracker.vercel.app",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Expense Tracking",
+      "Budget Management",
+      "Real-time Analytics",
+      "Mobile Responsive Design",
+      "Dual Tracking Modes"
+    ]
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      </Head>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Navbar */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
@@ -310,6 +340,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }

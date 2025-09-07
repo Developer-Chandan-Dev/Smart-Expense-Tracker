@@ -11,16 +11,17 @@ import BudgetAlert from '@/components/BudgetAlert';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorMessage from '@/components/ErrorMessage';
 import SuccessMessage from '@/components/SuccessMessage';
-import { RealtimeProvider, useRealtime } from '@/components/RealtimeProvider';
-import RealtimeNotification from '@/components/RealtimeNotification';
-import RealtimeStatus from '@/components/RealtimeStatus';
-import { useSocketInit } from '@/lib/socketInit';
+// Real-time features disabled for Vercel deployment
+// import { RealtimeProvider, useRealtime } from '@/components/RealtimeProvider';
+// import RealtimeNotification from '@/components/RealtimeNotification';
+// import RealtimeStatus from '@/components/RealtimeStatus';
+// import { useSocketInit } from '@/lib/socketInit';
 import { FileText, Target, BarChart3, History, PlusCircle, Wallet } from 'lucide-react';
 import { api } from '@/lib/api';
 import { User, Expense, Budget, ExpenseFormData, ExpenseFilters } from '@/types';
 
 function DashboardContent() {
-  const { lastUpdate } = useRealtime();
+  // const { lastUpdate } = useRealtime();
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState('');
   const [freeExpenses, setFreeExpenses] = useState<Expense[]>([]);
@@ -165,12 +166,12 @@ function DashboardContent() {
     router.push('/auth');
   };
 
-  // Auto-refresh data on real-time updates
-  useEffect(() => {
-    if (lastUpdate && token) {
-      loadDashboardData(token);
-    }
-  }, [lastUpdate, token]);
+  // Auto-refresh data on real-time updates (disabled for Vercel)
+  // useEffect(() => {
+  //   if (lastUpdate && token) {
+  //     loadDashboardData(token);
+  //   }
+  // }, [lastUpdate, token]);
 
   const freeTotal = freeExpenses.reduce((sum: number, expense: Expense) => sum + expense.amount, 0);
   const budgetTotal = budgetExpenses.reduce((sum: number, expense: Expense) => sum + expense.amount, 0);
@@ -192,7 +193,7 @@ function DashboardContent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <RealtimeNotification />
+      {/* <RealtimeNotification /> */}
       {/* Navigation */}
       <nav className="bg-white shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
@@ -204,7 +205,7 @@ function DashboardContent() {
             </div>
             
             <div className="flex items-center gap-4">
-              <RealtimeStatus />
+              {/* <RealtimeStatus /> */}
               <span className="text-gray-600 hidden sm:inline">Welcome, {user.name}</span>
               <button
                 onClick={handleLogout}
@@ -755,7 +756,7 @@ export default function Dashboard() {
   const [token, setToken] = useState('');
   const router = useRouter();
   
-  useSocketInit();
+  // useSocketInit();
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -775,8 +776,8 @@ export default function Dashboard() {
   }
 
   return (
-    <RealtimeProvider token={token}>
+    // <RealtimeProvider token={token}>
       <DashboardContent />
-    </RealtimeProvider>
+    // </RealtimeProvider>
   );
 }
