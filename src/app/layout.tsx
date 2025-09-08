@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://smart-expense-tracker.vercel.app'),
+  metadataBase: new URL('https://smart-expense-tracker2.vercel.app'),
   alternates: {
     canonical: "/",
   },
